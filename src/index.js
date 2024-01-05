@@ -1,17 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { YMaps } from "react-yandex-maps";
+import { createTheme, ThemeProvider } from "@mui/material";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+function MuiCustomization({ children }) {
+  const theme = {
+    components: {
+      MuiButton: {
+        defaultProps: { variant: "contained", disableElevation: true },
+      },
+    },
+  };
+
+  return <ThemeProvider theme={createTheme(theme)}>{children}</ThemeProvider>;
+}
+
+ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <MuiCustomization>
+      <YMaps query={{ apikey: "29294198-6cdc-4996-a870-01e89b830f3e", lang: "en_RU" }}>
+        <App />
+      </YMaps>
+    </MuiCustomization>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
